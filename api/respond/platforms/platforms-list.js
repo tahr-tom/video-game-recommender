@@ -13,7 +13,7 @@ const supportedSlugs = [
   "playstation5",
   "playstation4",
   "xbox-one",
-  "xbox-seriesx-x",
+  "xbox-series-x",
   "nintendo-switch",
   "ios",
   "android",
