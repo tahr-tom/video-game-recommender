@@ -15,6 +15,26 @@ const prependPayload = (list, payload) =>
 const findPayloadInList = (payload, list) =>
   list.find((item) => item.title === payload);
 
+// filter out stores link that are not needed and format required store links in one string
+const parseStoresLinks = (payloadPlatform, storesList) => {
+  // get stores objects for current platform
+  const requriedStores = platforms.find(
+    (platform) => platform.title === payloadPlatform
+  ).stores;
+
+  const requiredStoresIDList = requriedStores.map(({ id }) => id);
+
+  // filter out unused stores objects
+  const storeStringList = storesList
+    .filter(({ store_id }) => requiredStoresIDList.includes(store_id))
+    .map(
+      ({ store_id, url }) =>
+        `${requriedStores.find((store) => store.id === store_id).title}: ${url}`
+    );
+
+  return storeStringList.join('\n');
+};
+
 // TODO add some emojis
 const genres = [
   { id: 4, title: 'Action', emoji: '' },
@@ -40,16 +60,45 @@ const genres = [
 
 // TODO add some emojis
 const platforms = [
-  { id: 4, title: 'PC', emoji: '' },
-  { id: 187, title: 'PlayStation 5', emoji: '' },
-  { id: 18, title: 'PlayStation 4', emoji: '' },
-  { id: 1, title: 'Xbox One', emoji: '' },
-  { id: 186, title: 'Xbox Series S/X', emoji: '' },
-  { id: 7, title: 'Nintendo Switch', emoji: '' },
-  { id: 3, title: 'iOS', emoji: '' },
-  { id: 21, title: 'Android', emoji: '' },
-  { id: 5, title: 'macOS', emoji: '' },
-  { id: 6, title: 'Linux', emoji: '' },
+  {
+    id: 4,
+    title: 'PC',
+    emoji: '',
+    stores: [
+      { id: 1, title: 'Steam' },
+      { id: 5, title: 'GOG' },
+      { id: 9, title: 'itch.io' },
+      { id: 11, title: 'Epic Games' },
+    ],
+  },
+  {
+    id: 187,
+    title: 'PlayStation 5',
+    emoji: '',
+    stores: [{ id: 3, title: 'PlayStation Store' }],
+  },
+  {
+    id: 186,
+    title: 'Xbox Series S/X',
+    emoji: '',
+    stores: [
+      { id: 2, title: 'Xbox Store' },
+      { id: 7, title: 'Xbox 360 Store' },
+    ],
+  },
+  {
+    id: 7,
+    title: 'Nintendo Switch',
+    emoji: '',
+    stores: [{ id: 6, title: 'Nintendo Store' }],
+  },
+  { id: 3, title: 'iOS', emoji: '', stores: [{ id: 4, title: 'App Store' }] },
+  {
+    id: 21,
+    title: 'Android',
+    emoji: '',
+    stores: [{ id: 8, title: 'Google Play' }],
+  },
 ]; // transform with genre payload when genre has been seleced, so no processing required here
 
 let gamesList;
@@ -70,7 +119,7 @@ const start = (say, sendButton) => {
 const state = (payload, say, sendButton) => {
   const [payloadGenre, payloadPlatform] = payload.split('~');
 
-  say('DEBUG: current payload: ' + payloadGenre + ' + ' + payloadPlatform);
+  say(`DEBUG: current payload:  ${payloadGenre} + ${payloadPlatform}`);
 
   // payload looks like `{genre}`
   if (!payloadPlatform && findPayloadInList(payloadGenre, genres)) {
@@ -93,14 +142,7 @@ const state = (payload, say, sendButton) => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
       say(
-        'DEBUG: current payload: ' +
-          payloadGenre +
-          ' with id: ' +
-          genreID +
-          ' + ' +
-          payloadPlatform +
-          ' with id: ' +
-          platformID
+        `DEBUG: current payload: ${payloadGenre} with id: ${genreID} + ${payloadPlatform}with id: ${platformID}`
       );
       axios
         .get('https://api.rawg.io/api/games', {
@@ -113,7 +155,27 @@ const state = (payload, say, sendButton) => {
         .then((response) => {
           gamesList = response.data.results;
           if (gamesList.length > 0) {
-            say('How about ' + gamesList[0].name + '?');
+            say(`How about ${gamesList[0].name}?`).then(
+              // fetch all store links for current game
+              axios
+                .get(
+                  `https://api.rawg.io/api/games/${gamesList[0].id}/stores`,
+                  {
+                    params: {
+                      key: KEY,
+                    },
+                  }
+                )
+                .then((response) => {
+                  const storesString = parseStoresLinks(
+                    payloadPlatform,
+                    response.data.results
+                  );
+                  say(
+                    `Checkout the game in the store links below:\n ${storesString}`
+                  );
+                })
+            );
           } else {
             say("Something's wrong, response contains an empty game list!");
           }

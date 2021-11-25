@@ -1,0 +1,467 @@
+{
+  "count": 10,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "Steam",
+      "domain": "store.steampowered.com",
+      "slug": "steam",
+      "games_count": 57177,
+      "image_background": "https://media.rawg.io/media/games/f87/f87457e8347484033cb34cde6101d08d.jpg",
+      "games": [
+        {
+          "id": 3498,
+          "slug": "grand-theft-auto-v",
+          "name": "Grand Theft Auto V",
+          "added": 16174
+        },
+        {
+          "id": 3328,
+          "slug": "the-witcher-3-wild-hunt",
+          "name": "The Witcher 3: Wild Hunt",
+          "added": 14612
+        },
+        {
+          "id": 4200,
+          "slug": "portal-2",
+          "name": "Portal 2",
+          "added": 14085
+        },
+        {
+          "id": 5286,
+          "slug": "tomb-raider",
+          "name": "Tomb Raider (2013)",
+          "added": 12684
+        },
+        {
+          "id": 5679,
+          "slug": "the-elder-scrolls-v-skyrim",
+          "name": "The Elder Scrolls V: Skyrim",
+          "added": 12396
+        },
+        {
+          "id": 12020,
+          "slug": "left-4-dead-2",
+          "name": "Left 4 Dead 2",
+          "added": 12058
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "PlayStation Store",
+      "domain": "store.playstation.com",
+      "slug": "playstation-store",
+      "games_count": 7688,
+      "image_background": "https://media.rawg.io/media/games/310/3106b0e012271c5ffb16497b070be739.jpg",
+      "games": [
+        {
+          "id": 3498,
+          "slug": "grand-theft-auto-v",
+          "name": "Grand Theft Auto V",
+          "added": 16174
+        },
+        {
+          "id": 3328,
+          "slug": "the-witcher-3-wild-hunt",
+          "name": "The Witcher 3: Wild Hunt",
+          "added": 14612
+        },
+        {
+          "id": 4200,
+          "slug": "portal-2",
+          "name": "Portal 2",
+          "added": 14085
+        },
+        {
+          "id": 5286,
+          "slug": "tomb-raider",
+          "name": "Tomb Raider (2013)",
+          "added": 12684
+        },
+        {
+          "id": 5679,
+          "slug": "the-elder-scrolls-v-skyrim",
+          "name": "The Elder Scrolls V: Skyrim",
+          "added": 12396
+        },
+        {
+          "id": 4291,
+          "slug": "counter-strike-global-offensive",
+          "name": "Counter-Strike: Global Offensive",
+          "added": 12025
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Xbox Store",
+      "domain": "microsoft.com",
+      "slug": "xbox-store",
+      "games_count": 4680,
+      "image_background": "https://media.rawg.io/media/games/d1a/d1a2e99ade53494c6330a0ed945fe823.jpg",
+      "games": [
+        {
+          "id": 3498,
+          "slug": "grand-theft-auto-v",
+          "name": "Grand Theft Auto V",
+          "added": 16174
+        },
+        {
+          "id": 3328,
+          "slug": "the-witcher-3-wild-hunt",
+          "name": "The Witcher 3: Wild Hunt",
+          "added": 14612
+        },
+        {
+          "id": 4200,
+          "slug": "portal-2",
+          "name": "Portal 2",
+          "added": 14085
+        },
+        {
+          "id": 4062,
+          "slug": "bioshock-infinite",
+          "name": "BioShock Infinite",
+          "added": 11839
+        },
+        {
+          "id": 802,
+          "slug": "borderlands-2",
+          "name": "Borderlands 2",
+          "added": 11823
+        },
+        {
+          "id": 3439,
+          "slug": "life-is-strange-episode-1-2",
+          "name": "Life is Strange",
+          "added": 11781
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "App Store",
+      "domain": "apps.apple.com",
+      "slug": "apple-appstore",
+      "games_count": 71188,
+      "image_background": "https://media.rawg.io/media/games/942/9424d6bb763dc38d9378b488603c87fa.jpg",
+      "games": [
+        {
+          "id": 5286,
+          "slug": "tomb-raider",
+          "name": "Tomb Raider (2013)",
+          "added": 12684
+        },
+        {
+          "id": 4062,
+          "slug": "bioshock-infinite",
+          "name": "BioShock Infinite",
+          "added": 11839
+        },
+        {
+          "id": 802,
+          "slug": "borderlands-2",
+          "name": "Borderlands 2",
+          "added": 11823
+        },
+        {
+          "id": 3439,
+          "slug": "life-is-strange-episode-1-2",
+          "name": "Life is Strange",
+          "added": 11781
+        },
+        {
+          "id": 4286,
+          "slug": "bioshock",
+          "name": "BioShock",
+          "added": 10812
+        },
+        {
+          "id": 1030,
+          "slug": "limbo",
+          "name": "Limbo",
+          "added": 10652
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "GOG",
+      "domain": "gog.com",
+      "slug": "gog",
+      "games_count": 3782,
+      "image_background": "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
+      "games": [
+        {
+          "id": 3328,
+          "slug": "the-witcher-3-wild-hunt",
+          "name": "The Witcher 3: Wild Hunt",
+          "added": 14612
+        },
+        {
+          "id": 3439,
+          "slug": "life-is-strange-episode-1-2",
+          "name": "Life is Strange",
+          "added": 11781
+        },
+        {
+          "id": 1030,
+          "slug": "limbo",
+          "name": "Limbo",
+          "added": 10652
+        },
+        {
+          "id": 23027,
+          "slug": "the-walking-dead",
+          "name": "The Walking Dead: Season 1",
+          "added": 8945
+        },
+        {
+          "id": 422,
+          "slug": "terraria",
+          "name": "Terraria",
+          "added": 8870
+        },
+        {
+          "id": 16944,
+          "slug": "the-witcher-2-assassins-of-kings-enhanced-edition",
+          "name": "The Witcher 2: Assassins of Kings Enhanced Edition",
+          "added": 8544
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Nintendo Store",
+      "domain": "nintendo.com",
+      "slug": "nintendo",
+      "games_count": 8755,
+      "image_background": "https://media.rawg.io/media/games/7c4/7c448374df84b607f67ce9182a3a3ca7.jpg",
+      "games": [
+        {
+          "id": 3328,
+          "slug": "the-witcher-3-wild-hunt",
+          "name": "The Witcher 3: Wild Hunt",
+          "added": 14612
+        },
+        {
+          "id": 5679,
+          "slug": "the-elder-scrolls-v-skyrim",
+          "name": "The Elder Scrolls V: Skyrim",
+          "added": 12396
+        },
+        {
+          "id": 4062,
+          "slug": "bioshock-infinite",
+          "name": "BioShock Infinite",
+          "added": 11839
+        },
+        {
+          "id": 1030,
+          "slug": "limbo",
+          "name": "Limbo",
+          "added": 10652
+        },
+        {
+          "id": 2454,
+          "slug": "doom",
+          "name": "DOOM (2016)",
+          "added": 10173
+        },
+        {
+          "id": 3939,
+          "slug": "payday-2",
+          "name": "PAYDAY 2",
+          "added": 9773
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Xbox 360 Store",
+      "domain": "marketplace.xbox.com",
+      "slug": "xbox360",
+      "games_count": 1911,
+      "image_background": "https://media.rawg.io/media/games/e46/e462e92b46e8df13e78a806191610d47.jpg",
+      "games": [
+        {
+          "id": 3498,
+          "slug": "grand-theft-auto-v",
+          "name": "Grand Theft Auto V",
+          "added": 16174
+        },
+        {
+          "id": 4200,
+          "slug": "portal-2",
+          "name": "Portal 2",
+          "added": 14085
+        },
+        {
+          "id": 5286,
+          "slug": "tomb-raider",
+          "name": "Tomb Raider (2013)",
+          "added": 12684
+        },
+        {
+          "id": 5679,
+          "slug": "the-elder-scrolls-v-skyrim",
+          "name": "The Elder Scrolls V: Skyrim",
+          "added": 12396
+        },
+        {
+          "id": 12020,
+          "slug": "left-4-dead-2",
+          "name": "Left 4 Dead 2",
+          "added": 12058
+        },
+        {
+          "id": 4291,
+          "slug": "counter-strike-global-offensive",
+          "name": "Counter-Strike: Global Offensive",
+          "added": 12025
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Google Play",
+      "domain": "play.google.com",
+      "slug": "google-play",
+      "games_count": 16446,
+      "image_background": "https://media.rawg.io/media/games/e04/e04963f3ac4c4fa83a1dc0b9231e50db.jpg",
+      "games": [
+        {
+          "id": 5286,
+          "slug": "tomb-raider",
+          "name": "Tomb Raider (2013)",
+          "added": 12684
+        },
+        {
+          "id": 13536,
+          "slug": "portal",
+          "name": "Portal",
+          "added": 11923
+        },
+        {
+          "id": 802,
+          "slug": "borderlands-2",
+          "name": "Borderlands 2",
+          "added": 11823
+        },
+        {
+          "id": 3439,
+          "slug": "life-is-strange-episode-1-2",
+          "name": "Life is Strange",
+          "added": 11781
+        },
+        {
+          "id": 13537,
+          "slug": "half-life-2",
+          "name": "Half-Life 2",
+          "added": 10776
+        },
+        {
+          "id": 1030,
+          "slug": "limbo",
+          "name": "Limbo",
+          "added": 10652
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "itch.io",
+      "domain": "itch.io",
+      "slug": "itch",
+      "games_count": 473249,
+      "image_background": "https://media.rawg.io/media/games/af7/af7a831001c5c32c46e950cc883b8cb7.jpg",
+      "games": [
+        {
+          "id": 613,
+          "slug": "bastion",
+          "name": "Bastion",
+          "added": 6885
+        },
+        {
+          "id": 5525,
+          "slug": "brutal-legend",
+          "name": "Brutal Legend",
+          "added": 6601
+        },
+        {
+          "id": 1010,
+          "slug": "transistor",
+          "name": "Transistor",
+          "added": 6223
+        },
+        {
+          "id": 3740,
+          "slug": "fez",
+          "name": "FEZ",
+          "added": 5721
+        },
+        {
+          "id": 1774,
+          "slug": "grim-fandango-remastered",
+          "name": "Grim Fandango Remastered",
+          "added": 5061
+        },
+        {
+          "id": 11726,
+          "slug": "dead-cells",
+          "name": "Dead Cells",
+          "added": 4551
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Epic Games",
+      "domain": "epicgames.com",
+      "slug": "epic-games",
+      "games_count": 673,
+      "image_background": "https://media.rawg.io/media/games/7a4/7a45e4cdc5b07f316d49cf147b083b27.jpg",
+      "games": [
+        {
+          "id": 3498,
+          "slug": "grand-theft-auto-v",
+          "name": "Grand Theft Auto V",
+          "added": 16174
+        },
+        {
+          "id": 28,
+          "slug": "red-dead-redemption-2",
+          "name": "Red Dead Redemption 2",
+          "added": 11019
+        },
+        {
+          "id": 1030,
+          "slug": "limbo",
+          "name": "Limbo",
+          "added": 10652
+        },
+        {
+          "id": 3272,
+          "slug": "rocket-league",
+          "name": "Rocket League",
+          "added": 9530
+        },
+        {
+          "id": 278,
+          "slug": "horizon-zero-dawn",
+          "name": "Horizon Zero Dawn",
+          "added": 9475
+        },
+        {
+          "id": 58175,
+          "slug": "god-of-war-2",
+          "name": "God of War",
+          "added": 9434
+        }
+      ]
+    }
+  ]
+}
