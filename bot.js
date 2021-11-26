@@ -101,7 +101,31 @@ const platforms = [
   },
 ]; // transform with genre payload when genre has been seleced, so no processing required here
 
-let gamesList;
+const api = {
+  getGames: (genreID, platformID) => {
+    return axios
+      .get('https://api.rawg.io/api/games', {
+        params: {
+          key: KEY,
+          genres: genreID,
+          platforms: platformID,
+        },
+      })
+      .then((response) => response.data);
+  },
+
+  getStoresForGame: (gameID) => {
+    return axios
+      .get(`https://api.rawg.io/api/games/${gameID}/stores`, {
+        params: {
+          key: KEY,
+        },
+      })
+      .then((response) => response.data);
+  },
+};
+
+let gamesResponse;
 
 const start = (say, sendButton) => {
   // TODO add emojis
@@ -119,7 +143,7 @@ const start = (say, sendButton) => {
 const state = (payload, say, sendButton) => {
   const [payloadGenre, payloadPlatform] = payload.split('~');
 
-  say(`DEBUG: current payload:  ${payloadGenre} + ${payloadPlatform}`);
+  // say(`DEBUG: current payload:  ${payloadGenre} + ${payloadPlatform}`);
 
   // payload looks like `{genre}`
   if (!payloadPlatform && findPayloadInList(payloadGenre, genres)) {
@@ -142,44 +166,32 @@ const state = (payload, say, sendButton) => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
       say(
-        `DEBUG: current payload: ${payloadGenre} with id: ${genreID} + ${payloadPlatform}with id: ${platformID}`
+        `DEBUG: current payload: ${payloadGenre} with id: ${genreID} + ${payloadPlatform} with id: ${platformID}`
       );
-      axios
-        .get('https://api.rawg.io/api/games', {
-          params: {
-            key: KEY,
-            genres: genreID,
-            platforms: platformID,
-          },
-        })
-        .then((response) => {
-          gamesList = response.data.results;
-          if (gamesList.length > 0) {
-            say(`How about ${gamesList[0].name}?`).then(
-              // fetch all store links for current game
-              axios
-                .get(
-                  `https://api.rawg.io/api/games/${gamesList[0].id}/stores`,
-                  {
-                    params: {
-                      key: KEY,
-                    },
-                  }
-                )
-                .then((response) => {
-                  const storesString = parseStoresLinks(
-                    payloadPlatform,
-                    response.data.results
-                  );
-                  say(
-                    `Checkout the game in the store links below:\n ${storesString}`
-                  );
-                })
+
+      api.getGames(genreID, platformID).then((data) => {
+        gamesResponse = data;
+        if (gamesResponse.results.length > 0) {
+          const currentGame = gamesResponse.results[0];
+
+          api.getStoresForGame(currentGame.id).then((data) => {
+            const storesString = parseStoresLinks(
+              payloadPlatform,
+              data.results
             );
-          } else {
-            say("Something's wrong, response contains an empty game list!");
-          }
-        });
+
+            say(`How about ${currentGame.name}?`).then(() => {
+              say(
+                `Checkout the game in the store links below:\n ${storesString}`
+              );
+            });
+          });
+        } else {
+          say(
+            "DEBUG: Something's wrong, response contains an empty game list!"
+          );
+        }
+      });
     });
   } else {
     say('DEBUG: No payload recevied, should not happen, check code for bugs');
