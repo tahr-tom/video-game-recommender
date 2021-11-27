@@ -123,6 +123,16 @@ const api = {
       })
       .then((response) => response.data);
   },
+
+  getTrailersForGame: (gameID) => {
+    return axios
+      .get(`https://api.rawg.io/api/games/${gameID}/movies`, {
+        params: {
+          key: KEY,
+        },
+      })
+      .then((response) => response.data);
+  },
 };
 
 let gamesResponse;
@@ -165,9 +175,9 @@ const state = (payload, say, sendButton) => {
     say('Finding games for u!').then(() => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
-      say(
-        `DEBUG: current payload: ${payloadGenre} with id: ${genreID} + ${payloadPlatform} with id: ${platformID}`
-      );
+      // say(
+      //   `DEBUG: current payload: ${payloadGenre} with id: ${genreID} + ${payloadPlatform} with id: ${platformID}`
+      // );
 
       api.getGames(genreID, platformID).then((data) => {
         gamesResponse = data;
@@ -180,10 +190,28 @@ const state = (payload, say, sendButton) => {
               data.results
             );
 
-            say(`How about ${currentGame.name}?`).then(() => {
-              say(
-                `Checkout the game in the store links below:\n ${storesString}`
-              );
+            api.getTrailersForGame(currentGame.id).then((data) => {
+              const trailers = data.results;
+              say(`How about ${currentGame.name}?`).then(() => {
+                say({
+                  attachment: 'image',
+                  url: currentGame.background_image,
+                }).then(() => {
+                  if (trailers.length !== 0) {
+                    say(
+                      `Trailer: ${trailers[trailers.length - 1].data.max}`
+                    ).then(() => {
+                      say(
+                        `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                      );
+                    });
+                  } else {
+                    say(
+                      `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                    );
+                  }
+                });
+              });
             });
           });
         } else {
