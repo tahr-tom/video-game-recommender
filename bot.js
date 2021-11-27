@@ -1,7 +1,7 @@
 'use strict';
 const axios = require('axios');
 
-const KEY = ''; // use actual key before final submission
+const KEY = '68d59f0b54f34492957413fd37aa1003'; // use actual key before final submission
 
 // construct new paylaod string by prepending previous payload to current button payload string with separator
 const prependPayload = (list, payload) =>
@@ -133,6 +133,16 @@ const api = {
       })
       .then((response) => response.data);
   },
+
+  getGameDetails: (gameID) => {
+    return axios
+      .get(`https://api.rawg.io/api/games/${gameID}`, {
+        params: {
+          key: KEY,
+        },
+      })
+      .then((response) => response.data);
+  },
 };
 
 let gamesResponse;
@@ -181,9 +191,11 @@ const state = (payload, say, sendButton) => {
 
       api.getGames(genreID, platformID).then((data) => {
         gamesResponse = data;
-        if (gamesResponse.results.length > 0) {
-          const currentGame = gamesResponse.results[0];
 
+        const currentGame = gamesResponse.results.shift();
+
+        api.getGameDetails(currentGame.id).then((data) => {
+          const currentGameDetails = data;
           api.getStoresForGame(currentGame.id).then((data) => {
             const storesString = parseStoresLinks(
               payloadPlatform,
@@ -193,32 +205,34 @@ const state = (payload, say, sendButton) => {
             api.getTrailersForGame(currentGame.id).then((data) => {
               const trailers = data.results;
               say(`How about ${currentGame.name}?`).then(() => {
-                say({
-                  attachment: 'image',
-                  url: currentGame.background_image,
-                }).then(() => {
-                  if (trailers.length !== 0) {
-                    say(
-                      `Trailer: ${trailers[trailers.length - 1].data.max}`
-                    ).then(() => {
-                      say(
-                        `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                      );
+                say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+                  () => {
+                    say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                      say({
+                        attachment: 'image',
+                        url: currentGame.background_image,
+                      }).then(() => {
+                        if (trailers.length !== 0) {
+                          say(
+                            `Trailer: ${trailers[trailers.length - 1].data.max}`
+                          ).then(() => {
+                            say(
+                              `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                            );
+                          });
+                        } else {
+                          say(
+                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          );
+                        }
+                      });
                     });
-                  } else {
-                    say(
-                      `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                    );
                   }
-                });
+                );
               });
             });
           });
-        } else {
-          say(
-            "DEBUG: Something's wrong, response contains an empty game list!"
-          );
-        }
+        });
       });
     });
   } else {
