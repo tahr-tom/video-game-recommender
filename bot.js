@@ -1,7 +1,7 @@
 'use strict';
 const axios = require('axios');
 
-const KEY = '68d59f0b54f34492957413fd37aa1003'; // use actual key before final submission
+const KEY = ''; // use actual key before final submission
 
 // construct new paylaod string by prepending previous payload to current button payload string with separator
 const prependPayload = (list, payload) =>
@@ -107,6 +107,7 @@ const api = {
       .get('https://api.rawg.io/api/games', {
         params: {
           key: KEY,
+          page_size: 5, // default size of 10 will exceed characters limit of 640 even after removing unused properties
           genres: genreID,
           platforms: platformID,
         },
@@ -143,9 +144,26 @@ const api = {
       })
       .then((response) => response.data);
   },
+
+  getNextPage: (nextPageUrl) => {
+    return axios.get(nextPageUrl).then((response) => response.data);
+  },
 };
 
-let gamesResponse;
+// removing unnecessary properites to reduce stringfy size of the response object
+const gamesResponseCompressor = (games) => {
+  return {
+    count: games.count,
+    previous: games.previous,
+    next: games.next,
+    results: games.results.map((result) => {
+      return {
+        id: result.id,
+        name: result.name,
+      };
+    }),
+  };
+};
 
 const start = (say, sendButton) => {
   // TODO add emojis
@@ -161,7 +179,8 @@ const start = (say, sendButton) => {
 };
 
 const state = (payload, say, sendButton) => {
-  const [payloadGenre, payloadPlatform] = payload.split('~');
+  const [payloadGenre, payloadPlatform, payloadGamesResponse] =
+    payload.split('~');
 
   // say(`DEBUG: current payload:  ${payloadGenre} + ${payloadPlatform}`);
 
@@ -175,14 +194,16 @@ const state = (payload, say, sendButton) => {
       );
     });
   }
+
   // payload looks like `{genre}~{platform}`
   else if (
     payloadGenre &&
     payloadPlatform &&
+    !payloadGamesResponse &&
     findPayloadInList(payloadPlatform, platforms)
   ) {
     // TODO add emojis
-    say('Finding games for u!').then(() => {
+    say('Finding a game for u!').then(() => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
       // say(
@@ -190,9 +211,11 @@ const state = (payload, say, sendButton) => {
       // );
 
       api.getGames(genreID, platformID).then((data) => {
-        gamesResponse = data;
-
+        const gamesResponse = data;
         const currentGame = gamesResponse.results.shift();
+        const payloadGamesResponse = JSON.stringify(
+          gamesResponseCompressor(gamesResponse)
+        );
 
         api.getGameDetails(currentGame.id).then((data) => {
           const currentGameDetails = data;
@@ -210,7 +233,7 @@ const state = (payload, say, sendButton) => {
                     say(`Rating: ${currentGameDetails.rating}`).then(() => {
                       say({
                         attachment: 'image',
-                        url: currentGame.background_image,
+                        url: currentGameDetails.background_image,
                       }).then(() => {
                         if (trailers.length !== 0) {
                           say(
@@ -218,12 +241,34 @@ const state = (payload, say, sendButton) => {
                           ).then(() => {
                             say(
                               `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                            );
+                            ).then(() => {
+                              sendButton('Get a new game?', [
+                                {
+                                  title: 'Sure',
+                                  payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                                },
+                                {
+                                  title: 'No, I want to restart',
+                                  payload: 'restart',
+                                },
+                              ]);
+                            });
                           });
                         } else {
                           say(
                             `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                          );
+                          ).then(() => {
+                            sendButton('Get a new game?', [
+                              {
+                                title: 'Sure',
+                                payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                              },
+                              {
+                                title: 'No, I want to restart',
+                                payload: 'restart',
+                              },
+                            ]);
+                          });
                         }
                       });
                     });
@@ -235,6 +280,150 @@ const state = (payload, say, sendButton) => {
         });
       });
     });
+  }
+
+  // payload looks like `{genre}~{platform}~{gameResponse}`
+  else if (payloadGamesResponse) {
+    const gamesResponse = JSON.parse(payloadGamesResponse);
+
+    // if current results is a empty array that contains no games
+    if (gamesResponse.results.length === 0) {
+      api.getNextPage(gamesResponse.next).then((data) => {
+        const newGamesReponse = data;
+        const currentGame = newGamesReponse.results.shift();
+        const payloadGamesResponse = JSON.stringify(
+          gamesResponseCompressor(newGamesReponse)
+        );
+
+        api.getGameDetails(currentGame.id).then((data) => {
+          const currentGameDetails = data;
+          api.getStoresForGame(currentGame.id).then((data) => {
+            const storesString = parseStoresLinks(
+              payloadPlatform,
+              data.results
+            );
+
+            api.getTrailersForGame(currentGame.id).then((data) => {
+              const trailers = data.results;
+              say(`How about ${currentGame.name}?`).then(() => {
+                say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+                  () => {
+                    say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                      say({
+                        attachment: 'image',
+                        url: currentGameDetails.background_image,
+                      }).then(() => {
+                        if (trailers.length !== 0) {
+                          say(
+                            `Trailer: ${trailers[trailers.length - 1].data.max}`
+                          ).then(() => {
+                            say(
+                              `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                            ).then(() => {
+                              sendButton('Get a new game?', [
+                                {
+                                  title: 'Sure',
+                                  payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                                },
+                                {
+                                  title: 'No, I want to restart',
+                                  payload: 'restart',
+                                },
+                              ]);
+                            });
+                          });
+                        } else {
+                          say(
+                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          ).then(() => {
+                            sendButton('Get a new game?', [
+                              {
+                                title: 'Sure',
+                                payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                              },
+                              {
+                                title: 'No, I want to restart',
+                                payload: 'restart',
+                              },
+                            ]);
+                          });
+                        }
+                      });
+                    });
+                  }
+                );
+              });
+            });
+          });
+        });
+      });
+    }
+    // current results still contain at least 1 game
+    else {
+      const currentGame = gamesResponse.results.shift();
+      const payloadGamesResponse = JSON.stringify(
+        gamesResponseCompressor(gamesResponse)
+      );
+
+      api.getGameDetails(currentGame.id).then((data) => {
+        const currentGameDetails = data;
+        api.getStoresForGame(currentGame.id).then((data) => {
+          const storesString = parseStoresLinks(payloadPlatform, data.results);
+
+          api.getTrailersForGame(currentGame.id).then((data) => {
+            const trailers = data.results;
+            say(`How about ${currentGame.name}?`).then(() => {
+              say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+                () => {
+                  say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                    say({
+                      attachment: 'image',
+                      url: currentGameDetails.background_image,
+                    }).then(() => {
+                      if (trailers.length !== 0) {
+                        say(
+                          `Trailer: ${trailers[trailers.length - 1].data.max}`
+                        ).then(() => {
+                          say(
+                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          ).then(() => {
+                            sendButton('Get a new game?', [
+                              {
+                                title: 'Sure',
+                                payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                              },
+                              {
+                                title: 'No, I want to restart',
+                                payload: 'restart',
+                              },
+                            ]);
+                          });
+                        });
+                      } else {
+                        say(
+                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                        ).then(() => {
+                          sendButton('Get a new game?', [
+                            {
+                              title: 'Sure',
+                              payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
+                            },
+                            {
+                              title: 'No, I want to restart',
+                              payload: 'restart',
+                            },
+                          ]);
+                        });
+                      }
+                    });
+                  });
+                }
+              );
+            });
+          });
+        });
+      });
+    }
   } else {
     say('DEBUG: No payload recevied, should not happen, check code for bugs');
   }
