@@ -203,7 +203,7 @@ const state = (payload, say, sendButton) => {
     findPayloadInList(payloadPlatform, platforms)
   ) {
     // TODO add emojis
-    say('Finding a game for u ✔️').then(() => {
+    say('Finding a game for you ✔️').then(() => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
       // say(
