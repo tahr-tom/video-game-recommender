@@ -455,7 +455,7 @@ module.exports = {
   filename: 'es',
   title: 'Video Game Recommender',
   introduction: [
-    'It is a video game recommender 👑 Recommended video games based on user input',
+    'It is a video game recommender 👑 Recommend video games based on user input',
   ],
   start: start,
   state: state,
