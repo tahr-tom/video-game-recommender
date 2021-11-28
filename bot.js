@@ -243,7 +243,7 @@ const state = (payload, say, sendButton) => {
                           }`
                         ).then(() => {
                           say(
-                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                            `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                           ).then(() => {
                             sendButton(
                               'Get a new game? 🔍 (Same genre and platform)',
@@ -262,7 +262,7 @@ const state = (payload, say, sendButton) => {
                         });
                       } else {
                         say(
-                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                         ).then(() => {
                           sendButton(
                             'Get a new game? 🔍 (Same genre and platform)',
@@ -329,7 +329,7 @@ const state = (payload, say, sendButton) => {
                           }`
                         ).then(() => {
                           say(
-                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                            `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                           ).then(() => {
                             sendButton(
                               'Get a new game? 🔍 (Same genre and platform)',
@@ -348,7 +348,7 @@ const state = (payload, say, sendButton) => {
                         });
                       } else {
                         say(
-                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                         ).then(() => {
                           sendButton(
                             'Get a new game? 🔍 (Same genre and platform)',
@@ -402,7 +402,7 @@ const state = (payload, say, sendButton) => {
                         `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
                       ).then(() => {
                         say(
-                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                          `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                         ).then(() => {
                           sendButton(
                             'Get a new game? 🔍 (Same genre and platform)',
@@ -421,7 +421,7 @@ const state = (payload, say, sendButton) => {
                       });
                     } else {
                       say(
-                        `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                        `Checkout ${currentGame.name} in the store links below:\n${storesString}`
                       ).then(() => {
                         sendButton(
                           'Get a new game? 🔍 (Same genre and platform)',
