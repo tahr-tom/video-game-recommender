@@ -228,21 +228,26 @@ const state = (payload, say, sendButton) => {
             api.getTrailersForGame(currentGame.id).then((data) => {
               const trailers = data.results;
               say(`How about ${currentGame.name}? 🤔`).then(() => {
-                say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
-                  () => {
-                    say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
-                      say({
-                        attachment: 'image',
-                        url: currentGameDetails.background_image,
-                      }).then(() => {
-                        if (trailers.length !== 0) {
+                say(
+                  `Metacritic Score ⚜️: ${currentGameDetails.metacritic} `
+                ).then(() => {
+                  say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
+                    say({
+                      attachment: 'image',
+                      url: currentGameDetails.background_image,
+                    }).then(() => {
+                      if (trailers.length !== 0) {
+                        say(
+                          `Trailer 🎞️: ${
+                            trailers[trailers.length - 1].data.max
+                          }`
+                        ).then(() => {
                           say(
-                            `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
+                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                           ).then(() => {
-                            say(
-                              `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                            ).then(() => {
-                              sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                            sendButton(
+                              'Get a new game? 🔍 (Same genre and platform)',
+                              [
                                 {
                                   title: 'Sure 🤩',
                                   payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -251,14 +256,17 @@ const state = (payload, say, sendButton) => {
                                   title: 'No, I want to restart 🔁',
                                   payload: 'restart',
                                 },
-                              ]);
-                            });
+                              ]
+                            );
                           });
-                        } else {
-                          say(
-                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                          ).then(() => {
-                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                        });
+                      } else {
+                        say(
+                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                        ).then(() => {
+                          sendButton(
+                            'Get a new game? 🔍 (Same genre and platform)',
+                            [
                               {
                                 title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -267,13 +275,13 @@ const state = (payload, say, sendButton) => {
                                 title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
-                            ]);
-                          });
-                        }
-                      });
+                            ]
+                          );
+                        });
+                      }
                     });
-                  }
-                );
+                  });
+                });
               });
             });
           });
@@ -306,21 +314,26 @@ const state = (payload, say, sendButton) => {
             api.getTrailersForGame(currentGame.id).then((data) => {
               const trailers = data.results;
               say(`How about ${currentGame.name}? 🤔`).then(() => {
-                say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
-                  () => {
-                    say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
-                      say({
-                        attachment: 'image',
-                        url: currentGameDetails.background_image,
-                      }).then(() => {
-                        if (trailers.length !== 0) {
+                say(
+                  `Metacritic Score ⚜️: ${currentGameDetails.metacritic} `
+                ).then(() => {
+                  say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
+                    say({
+                      attachment: 'image',
+                      url: currentGameDetails.background_image,
+                    }).then(() => {
+                      if (trailers.length !== 0) {
+                        say(
+                          `Trailer 🎞️: ${
+                            trailers[trailers.length - 1].data.max
+                          }`
+                        ).then(() => {
                           say(
-                            `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
+                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                           ).then(() => {
-                            say(
-                              `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                            ).then(() => {
-                              sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                            sendButton(
+                              'Get a new game? 🔍 (Same genre and platform)',
+                              [
                                 {
                                   title: 'Sure 🤩',
                                   payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -329,14 +342,17 @@ const state = (payload, say, sendButton) => {
                                   title: 'No, I want to restart 🔁',
                                   payload: 'restart',
                                 },
-                              ]);
-                            });
+                              ]
+                            );
                           });
-                        } else {
-                          say(
-                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                          ).then(() => {
-                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                        });
+                      } else {
+                        say(
+                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                        ).then(() => {
+                          sendButton(
+                            'Get a new game? 🔍 (Same genre and platform)',
+                            [
                               {
                                 title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -345,13 +361,13 @@ const state = (payload, say, sendButton) => {
                                 title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
-                            ]);
-                          });
-                        }
-                      });
+                            ]
+                          );
+                        });
+                      }
                     });
-                  }
-                );
+                  });
+                });
               });
             });
           });
@@ -373,21 +389,24 @@ const state = (payload, say, sendButton) => {
           api.getTrailersForGame(currentGame.id).then((data) => {
             const trailers = data.results;
             say(`How about ${currentGame.name}? 🤔`).then(() => {
-              say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
-                () => {
-                  say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
-                    say({
-                      attachment: 'image',
-                      url: currentGameDetails.background_image,
-                    }).then(() => {
-                      if (trailers.length !== 0) {
+              say(
+                `Metacritic Score ⚜️: ${currentGameDetails.metacritic} `
+              ).then(() => {
+                say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
+                  say({
+                    attachment: 'image',
+                    url: currentGameDetails.background_image,
+                  }).then(() => {
+                    if (trailers.length !== 0) {
+                      say(
+                        `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
+                      ).then(() => {
                         say(
-                          `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
+                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                         ).then(() => {
-                          say(
-                            `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                          ).then(() => {
-                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                          sendButton(
+                            'Get a new game? 🔍 (Same genre and platform)',
+                            [
                               {
                                 title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -396,14 +415,17 @@ const state = (payload, say, sendButton) => {
                                 title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
-                            ]);
-                          });
+                            ]
+                          );
                         });
-                      } else {
-                        say(
-                          `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
-                        ).then(() => {
-                          sendButton('Get a new game? 🔍 (Same genre and platform)', [
+                      });
+                    } else {
+                      say(
+                        `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
+                      ).then(() => {
+                        sendButton(
+                          'Get a new game? 🔍 (Same genre and platform)',
+                          [
                             {
                               title: 'Sure 🤩',
                               payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
@@ -412,13 +434,13 @@ const state = (payload, say, sendButton) => {
                               title: 'No, I want to restart 🔁',
                               payload: 'restart',
                             },
-                          ]);
-                        });
-                      }
-                    });
+                          ]
+                        );
+                      });
+                    }
                   });
-                }
-              );
+                });
+              });
             });
           });
         });
@@ -432,7 +454,9 @@ const state = (payload, say, sendButton) => {
 module.exports = {
   filename: 'es',
   title: 'Video Game Recommender',
-  introduction: ['It is a video game recommender 👑 Recommended video games based on user input'],
+  introduction: [
+    'It is a video game recommender 👑 Recommended video games based on user input',
+  ],
   start: start,
   state: state,
 };
