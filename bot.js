@@ -13,7 +13,7 @@ const prependPayload = (list, payload) =>
 
 // find item in list by payload
 const findPayloadInList = (payload, list) =>
-  list.find((item) => item.title === payload);
+  list.find((item) => item.title.startsWith(payload));
 
 // filter out stores link that are not needed and format required store links in one string
 const parseStoresLinks = (payloadPlatform, storesList) => {
