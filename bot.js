@@ -37,21 +37,21 @@ const parseStoresLinks = (payloadPlatform, storesList) => {
 
 // TODO add some emojis
 const genres = [
-  { id: 4, title: 'Action', emoji: '' },
-  { id: 51, title: 'Indie', emoji: '' },
-  { id: 3, title: 'Adventure', emoji: '' },
-  { id: 10, title: 'Strategy', emoji: '' },
-  { id: 2, title: 'Shooter', emoji: '' },
-  { id: 40, title: 'Casual', emoji: '' },
-  { id: 14, title: 'Simulation', emoji: '' },
-  { id: 7, title: 'Puzzle', emoji: '' },
-  { id: 11, title: 'Arcade', emoji: '' },
-  { id: 83, title: 'Platformer', emoji: '' },
-  { id: 1, title: 'Racing', emoji: '' },
-  { id: 15, title: 'Sports', emoji: '' },
-  { id: 6, title: 'Fighting', emoji: '' },
-  { id: 34, title: 'Educational', emoji: '' },
-  { id: 17, title: 'Card', emoji: '' },
+  { id: 4, title: 'Action', emoji: '🏃' },
+  { id: 51, title: 'Indie', emoji: '🎭' },
+  { id: 3, title: 'Adventure', emoji: '🚣' },
+  { id: 10, title: 'Strategy', emoji: '♟️' },
+  { id: 2, title: 'Shooter', emoji: '🔫' },
+  { id: 40, title: 'Casual', emoji: '🎣' },
+  { id: 14, title: 'Simulation', emoji: '🕹' },
+  { id: 7, title: 'Puzzle', emoji: '🧩' },
+  { id: 11, title: 'Arcade', emoji: '🎮' },
+  { id: 83, title: 'Platformer', emoji: '🎪' },
+  { id: 1, title: 'Racing', emoji: '🏎' },
+  { id: 15, title: 'Sports', emoji: '⚽' },
+  { id: 6, title: 'Fighting', emoji: '🥊' },
+  { id: 34, title: 'Educational', emoji: '📚' },
+  { id: 17, title: 'Card', emoji: '🃏' },
 ].map(({ id, title, emoji }) => ({
   id: id,
   title: title + emoji,
@@ -63,7 +63,7 @@ const platforms = [
   {
     id: 4,
     title: 'PC',
-    emoji: '',
+    emoji: '🖥️',
     stores: [
       { id: 1, title: 'Steam' },
       { id: 5, title: 'GOG' },
@@ -74,13 +74,13 @@ const platforms = [
   {
     id: 187,
     title: 'PlayStation 5',
-    emoji: '',
+    emoji: '🎮',
     stores: [{ id: 3, title: 'PlayStation Store' }],
   },
   {
     id: 186,
     title: 'Xbox Series S/X',
-    emoji: '',
+    emoji: '🎮',
     stores: [
       { id: 2, title: 'Xbox Store' },
       { id: 7, title: 'Xbox 360 Store' },
@@ -89,14 +89,14 @@ const platforms = [
   {
     id: 7,
     title: 'Nintendo Switch',
-    emoji: '',
+    emoji: '🕹',
     stores: [{ id: 6, title: 'Nintendo Store' }],
   },
-  { id: 3, title: 'iOS', emoji: '', stores: [{ id: 4, title: 'App Store' }] },
+  { id: 3, title: 'iOS', emoji: '📱', stores: [{ id: 4, title: 'App Store' }] },
   {
     id: 21,
     title: 'Android',
-    emoji: '',
+    emoji: '📱',
     stores: [{ id: 8, title: 'Google Play' }],
   },
 ]; // transform with genre payload when genre has been seleced, so no processing required here
@@ -168,11 +168,11 @@ const gamesResponseCompressor = (games) => {
 const start = (say, sendButton) => {
   // TODO add emojis
   say(
-    'Hello! This chatbot will recommend video games based on your preferences'
+    'Hello! This chatbot will recommend video games based on your preferences 💬'
   ).then(() => {
     sendButton(
       // TODO add emojis
-      'First, please select a genre you like',
+      'First, please select a genre you like 🤖',
       genres.concat('Cancel')
     );
   });
@@ -186,10 +186,10 @@ const state = (payload, say, sendButton) => {
 
   // payload looks like `{genre}`
   if (!payloadPlatform && findPayloadInList(payloadGenre, genres)) {
-    say('Noted').then(() => {
+    say('Noted 👌').then(() => {
       sendButton(
         // TODO add emojis
-        'Next, please select the platform you would like to play on',
+        'Next, please select the platform you would like to play on 👾',
         prependPayload(platforms, payloadGenre).concat('Cancel')
       );
     });
@@ -203,7 +203,7 @@ const state = (payload, say, sendButton) => {
     findPayloadInList(payloadPlatform, platforms)
   ) {
     // TODO add emojis
-    say('Finding a game for u!').then(() => {
+    say('Finding a game for u ✔️').then(() => {
       const genreID = findPayloadInList(payloadGenre, genres).id;
       const platformID = findPayloadInList(payloadPlatform, platforms).id;
       // say(
@@ -227,28 +227,28 @@ const state = (payload, say, sendButton) => {
 
             api.getTrailersForGame(currentGame.id).then((data) => {
               const trailers = data.results;
-              say(`How about ${currentGame.name}?`).then(() => {
-                say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+              say(`How about ${currentGame.name}? 🤔`).then(() => {
+                say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
                   () => {
-                    say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                    say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
                       say({
                         attachment: 'image',
                         url: currentGameDetails.background_image,
                       }).then(() => {
                         if (trailers.length !== 0) {
                           say(
-                            `Trailer: ${trailers[trailers.length - 1].data.max}`
+                            `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
                           ).then(() => {
                             say(
                               `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                             ).then(() => {
-                              sendButton('Get a new game?', [
+                              sendButton('Get a new game? 🔍 (Same genre and platform)', [
                                 {
-                                  title: 'Sure',
+                                  title: 'Sure 🤩',
                                   payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                                 },
                                 {
-                                  title: 'No, I want to restart',
+                                  title: 'No, I want to restart 🔁',
                                   payload: 'restart',
                                 },
                               ]);
@@ -258,13 +258,13 @@ const state = (payload, say, sendButton) => {
                           say(
                             `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                           ).then(() => {
-                            sendButton('Get a new game?', [
+                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
                               {
-                                title: 'Sure',
+                                title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                               },
                               {
-                                title: 'No, I want to restart',
+                                title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
                             ]);
@@ -305,28 +305,28 @@ const state = (payload, say, sendButton) => {
 
             api.getTrailersForGame(currentGame.id).then((data) => {
               const trailers = data.results;
-              say(`How about ${currentGame.name}?`).then(() => {
-                say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+              say(`How about ${currentGame.name}? 🤔`).then(() => {
+                say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
                   () => {
-                    say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                    say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
                       say({
                         attachment: 'image',
                         url: currentGameDetails.background_image,
                       }).then(() => {
                         if (trailers.length !== 0) {
                           say(
-                            `Trailer: ${trailers[trailers.length - 1].data.max}`
+                            `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
                           ).then(() => {
                             say(
                               `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                             ).then(() => {
-                              sendButton('Get a new game?', [
+                              sendButton('Get a new game? 🔍 (Same genre and platform)', [
                                 {
-                                  title: 'Sure',
+                                  title: 'Sure 🤩',
                                   payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                                 },
                                 {
-                                  title: 'No, I want to restart',
+                                  title: 'No, I want to restart 🔁',
                                   payload: 'restart',
                                 },
                               ]);
@@ -336,13 +336,13 @@ const state = (payload, say, sendButton) => {
                           say(
                             `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                           ).then(() => {
-                            sendButton('Get a new game?', [
+                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
                               {
-                                title: 'Sure',
+                                title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                               },
                               {
-                                title: 'No, I want to restart',
+                                title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
                             ]);
@@ -372,28 +372,28 @@ const state = (payload, say, sendButton) => {
 
           api.getTrailersForGame(currentGame.id).then((data) => {
             const trailers = data.results;
-            say(`How about ${currentGame.name}?`).then(() => {
-              say(`Metacritic Score: ${currentGameDetails.metacritic}`).then(
+            say(`How about ${currentGame.name}? 🤔`).then(() => {
+              say(`Metacritic Score ⚜️: ${currentGameDetails.metacritic} `).then(
                 () => {
-                  say(`Rating: ${currentGameDetails.rating}`).then(() => {
+                  say(`Rating ❤️: ${currentGameDetails.rating}`).then(() => {
                     say({
                       attachment: 'image',
                       url: currentGameDetails.background_image,
                     }).then(() => {
                       if (trailers.length !== 0) {
                         say(
-                          `Trailer: ${trailers[trailers.length - 1].data.max}`
+                          `Trailer 🎞️: ${trailers[trailers.length - 1].data.max}`
                         ).then(() => {
                           say(
                             `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                           ).then(() => {
-                            sendButton('Get a new game?', [
+                            sendButton('Get a new game? 🔍 (Same genre and platform)', [
                               {
-                                title: 'Sure',
+                                title: 'Sure 🤩',
                                 payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                               },
                               {
-                                title: 'No, I want to restart',
+                                title: 'No, I want to restart 🔁',
                                 payload: 'restart',
                               },
                             ]);
@@ -403,13 +403,13 @@ const state = (payload, say, sendButton) => {
                         say(
                           `Checkout ${currentGame.name} in the store links below:\n ${storesString}`
                         ).then(() => {
-                          sendButton('Get a new game?', [
+                          sendButton('Get a new game? 🔍 (Same genre and platform)', [
                             {
-                              title: 'Sure',
+                              title: 'Sure 🤩',
                               payload: `${payloadGenre}~${payloadPlatform}~${payloadGamesResponse}`,
                             },
                             {
-                              title: 'No, I want to restart',
+                              title: 'No, I want to restart 🔁',
                               payload: 'restart',
                             },
                           ]);
@@ -432,7 +432,7 @@ const state = (payload, say, sendButton) => {
 module.exports = {
   filename: 'es',
   title: 'Video Game Recommender',
-  introduction: ['Recommend video games based on user input'],
+  introduction: ['It is a video game recommender 👑 Recommended video games based on user input'],
   start: start,
   state: state,
 };
